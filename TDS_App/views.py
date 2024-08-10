@@ -65,7 +65,7 @@ def points(request):
 @login_required
 def Home(request):
     All_apps = AppDetails.objects.all()
-    return render(request, 'home.html', {'app_details': All_apps, 'user': request.user,})
+    return render(request, 'Home.html', {'app_details': All_apps, 'user': request.user,})
 
 @login_required
 def profile(request):
