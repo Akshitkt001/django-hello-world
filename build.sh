@@ -3,14 +3,13 @@
 # Install dependencies
 pip install -r requirements.txt
 
-# Run migrations
-python manage.py migrate
+# Run migrations to create necessary database tables
+python manage.py migrate --no-input
 
-# Create superuser
-python manage.py createsuperuser --no-input --username $DJANGO_SUPERUSER_USERNAME --email $DJANGO_SUPERUSER_EMAIL
+# Create a superuser without prompts (only if the superuser isn't already created)
+if [ ! -z "$DJANGO_SUPERUSER_USERNAME" ] && [ ! -z "$DJANGO_SUPERUSER_EMAIL" ] && [ ! -z "$DJANGO_SUPERUSER_PASSWORD" ]; then
+  python manage.py createsuperuser --no-input --username $DJANGO_SUPERUSER_USERNAME --email $DJANGO_SUPERUSER_EMAIL || true
+fi
 
-# Migrate again if needed
-python manage.py migrate
-
-# Collect static files
+# Collect static files (optional, if needed)
 python manage.py collectstatic --noinput
