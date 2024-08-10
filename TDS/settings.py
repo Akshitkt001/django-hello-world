@@ -63,13 +63,14 @@ WSGI_APPLICATION = 'TDS.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'DjangoApp',
+        'NAME': 'djangoapp_q8as',
         'USER': 'djangoapp_q8as_user',
         'PASSWORD': 'peLqMM70WsuiGfhHrTgZNIvKPbTmHoUc',
         'HOST': 'dpg-cqrkj0ggph6c73a0s2o0-a',
-        'PORT': '5432',
+        'PORT': '5432',  # Default PostgreSQL port
     }
 }
+
 
 
 AUTH_PASSWORD_VALIDATORS = [
