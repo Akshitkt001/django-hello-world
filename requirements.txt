@@ -2,3 +2,4 @@ Django
 gunicorn
 djangorestframework
 django-allauth
+psycopg2-binary
