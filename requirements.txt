@@ -2,6 +2,3 @@ Django
 gunicorn
 djangorestframework
 django-allauth
-psycopg2-binary
-python manage.py collectstatic --noinput
-python manage.py migrate
