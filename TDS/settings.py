@@ -62,8 +62,12 @@ WSGI_APPLICATION = 'TDS.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'DjangoApp',
+        'USER': 'djangoapp_q8as_user',
+        'PASSWORD': 'peLqMM70WsuiGfhHrTgZNIvKPbTmHoUc',
+        'HOST': 'dpg-cqrkj0ggph6c73a0s2o0-a',
+        'PORT': '5432',
     }
 }
 
