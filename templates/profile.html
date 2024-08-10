@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include 'links.html' %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="{% static 'js/script.js' %}"></script>
+    <meta name="csrf-token" content="{% csrf_token %}">
+    <style>
+        /* Add the CSS here for fixed footer */
+        .fixed-footer {
+            position: fixed; /* Fixes the footer to the bottom of the screen */
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #f8f9fa; /* Background color for the footer */
+            border-top: 1px solid #ddd; /* Border for visual separation */
+            box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+            padding: 10px 0;
+            display: flex; /* Enables flexbox layout */
+            justify-content: center; /* Centers the buttons horizontally */
+            align-items: center; /* Centers the buttons vertically */
+            gap: 10px; /* Space between buttons */
+            z-index: 1000; /* Keeps footer above other content */
+        }
+
+        .btn1 {
+            background-color: #fff; /* Background color of buttons */
+            color: black; /* Text color */
+            border: 1px solid #4285f4; /* Border color */
+            padding: 10px 20px; /* Padding inside buttons */
+            font-size: 16px; /* Font size for button text */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s ease; /* Smooth background color transition */
+            border-radius: 5px; /* Rounded corners */
+            text-align: center;
+            flex: 1; /* Ensures buttons take equal space */
+            max-width: 180px; /* Maximum width for buttons */
+        }
+
+        .btn1.active {
+            background-color: #4285f4; /* Background color for active button */
+            color: #fff; /* Text color for active button */
+        }
+
+        .btn1:hover {
+            background-color: #e0e0e0; /* Hover background color */
+        }
+
+        /* Ensure the main content has enough bottom padding */
+        .container-fluid {
+            padding-bottom: 60px; /* Adjust this value if necessary */
+        }
+
+        /* Profile details container styling */
+        .profile-details-container {
+            max-width: 600px;
+            margin: 0 auto; /* Center horizontally */
+            padding: 20px;
+            background-color: #f8f9fa; /* Light background color */
+            border: 1px solid #ddd; /* Border for the box */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
+        }
+
+        .profile-details {
+            text-align: center; /* Center text within the profile details */
+        }
+
+        .profile-image-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        .upload-btn {
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .upload-btn:hover {
+            background-color: #357ae8;
+        }
+
+        .file-input {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="topnav">
+        <h2>Hello {{ user.username }}</h2>
+    </div>
+    <div class="container-fluid p-4" style="padding-right:5% !important;">
+        <div class="row">
+            <div class="col-12 p-5 bg-light">
+                <section style="height:100vh;">
+                    <div class="profile-header">
+                        <div class="profile-image-container">
+                            <img class="profile-image" id="profileImage" src="{% static 'images/default-profile.png' %}" alt="Profile Image">
+                            <input type="file" id="fileInput" class="file-input" accept="image/*">
+                            <button class="upload-btn" id="changeProfilePictureBtn">Select Image</button>
+                            <button class="upload-btn" id="saveProfilePictureBtn">Save</button>
+                        </div>
+                        <h1 class="profile-name">{{ user.username }} <i class="bi bi-pencil-square"></i></h1>
+                    </div>
+
+                    <div class="profile-details-container">
+                        <div class="profile-details">
+                            <p><b><i class="bip bi-person-fill"> User Name: </i></b> {{ user.username }}</p>
+                            <p><b><i class="bip bi-telephone-fill"> Mobile No: </i></b> +91 XXXXXXXXXXX</p>
+                            <p><b><i class="bip bi-envelope-at-fill"> Email: </i></b> {{ user.email }}</p>
+                            <p><b><i class="bip bi-house-door-fill"> Address: </i></b> XX/XX Vrindavan Colony Lucknow, Uttar Pradesh</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer container -->
+    <div class="fixed-footer">
+        <a href="Home"><button class="btn1"><i class="bi bi-house-door-fill"></i> Home</button></a>
+        {% if user.is_superuser %}
+            <a href="Add_App"><button class="btn1"><i class="bi bi-plus-lg"></i> Add Apps</button></a>
+        {% endif %}
+        {% if not user.is_superuser %}
+            <a href="profile"><button class="btn1"><i class="bi bi-person-fill"></i> Profile</button></a>
+            <a href="points"><button class="btn1"><i class="bi bi-database-fill"></i> Points</button></a>
+            <a href="task"><button class="btn1"><i class="bi bi-calendar-check"></i> Task</button></a>
+        {% endif %}
+        <a href="logout"><button class="btn1"><i class="bi bi-power"></i> Logout</button></a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $.ajaxSetup({
+          headers: 
+          {
+             'X-CSRFToken': $('meta[name="csrf-token"]').attr('content')
+          }
+        });
+
+        $(document).ready(function () {
+            $('#changeProfilePictureBtn').click(function () {
+                $('#fileInput').click();
+            });
+
+            $('#fileInput').change(function (e) {
+                var file = e.target.files[0];
+                if (file) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#profileImage').attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            $('#saveProfilePictureBtn').click(function () {
+                var fileInput = $('#fileInput')[0];
+                if (fileInput.files.length === 0) {
+                    alert('No file selected.');
+                    return;
+                }
+
+                var file = fileInput.files[0];
+                var formData = new FormData();
+                formData.append('profile_image', file);
+
+                $.ajax({
+                    url: '/upload-profile-picture/', // Your server-side upload URL
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        $('#profileImage').attr('src', response.image_url); // Update profile image
+                        alert('Profile picture updated successfully.');
+                    },
+                    error: function (error) {
+                        console.log('Error uploading image:', error);
+                        alert('Error updating profile picture.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

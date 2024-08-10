@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login and Registration Page</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    body {
+      background: linear-gradient(to right top, #051937, #552b5d, #a73761, #e06146, #eba612);
+      color: #ffffff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .container {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .auth-card {
+      background-color: #2e2e2e;
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .auth-card h2 {
+      color: #ffffff;
+      margin-bottom: 20px;
+    }
+
+    .nav-tabs {
+      border-bottom: 1px solid #444;
+    }
+
+    .nav-tabs .nav-link {
+      background-color: #333;
+      color: #bbb;
+      border: none;
+      border-radius: 8px 8px 0 0;
+      font-weight: 500;
+    }
+
+    .nav-tabs .nav-link.active {
+      background-color: #0062cc;
+      color: #fff;
+      border-bottom: 1px solid #0062cc;
+    }
+
+    .btn-primary {
+      background: linear-gradient(to right top, #051937, #552b5d, #a73761, #e06146, #eba612);
+      color: white;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background: #f3606c;
+    }
+
+    .password-icon {
+      position: relative;
+    }
+
+    .password-icon i {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+
+    .password-strength-meter {
+      height: 10px;
+      border-radius: 5px;
+      margin-top: 5px;
+    }
+
+    .weak {
+      background-color: #ff4d4d;
+    }
+
+    .medium {
+      background-color: #ffd633;
+    }
+
+    .strong {
+      background-color: #b3ff66;
+    }
+
+    .password-match-indicator {
+      margin-top: 5px;
+      font-size: 14px;
+    }
+
+    ::-webkit-scrollbar {
+        width: 0px;
+        height: 0px;
+        background: transparent;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="auth-card">
+      <h2 class="text-center"><u>Sign In & Sign Up</u></h2>
+      {% for message in messages %}
+        <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+          {{ message }}
+        </div>
+      {% endfor %}
+
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" id="login-tab" data-toggle="tab" href="#login"><b>Login</b></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="register-tab" data-toggle="tab" href="#register"><b>Register</b></a>
+        </li>
+      </ul>
+
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="login">
+          <form action="login" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="text" class="form-control" id="email" name="username" required>
+            </div>
+            <div class="form-group password-icon">
+              <label for="password">Password</label>
+              <div class="input-group">
+                <input type="password" class="form-control" id="password" name="password" required>
+                <div class="input-group-append">
+                  <i class="fa fa-eye-slash"></i>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+          </form>
+        </div>
+
+        <div class="tab-pane fade" id="register">
+          <form action="register" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+              <label for="register-email">Email</label>
+              <input type="email" class="form-control" id="register-email" name="email" required>
+            </div>
+            <div class="form-group password-icon">
+              <label for="register-password">Password</label>
+              <div class="input-group">
+                <input type="password" class="form-control" id="register-password" name="password1" required>
+                <div class="input-group-append">
+                  <i class="fa fa-eye-slash"></i>
+                </div>
+              </div>
+            </div>
+            <div class="password-strength-meter"></div>
+            <div class="form-group password-icon">
+              <label for="confirm-password">Confirm Password</label>
+              <div class="input-group">
+                <input type="password" class="form-control" id="confirm-password" name="password2" required>
+                <div class="input-group-append">
+                  <i class="fa fa-eye-slash"></i>
+                </div>
+              </div>
+            </div>
+            <div class="password-match-indicator"></div>
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Toggle password visibility
+      $('.password-icon i').click(function() {
+        $(this).toggleClass('fa-eye fa-eye-slash');
+        var input = $(this).closest('.password-icon').find('input');
+        if (input.attr('type') === 'password') {
+          input.attr('type', 'text');
+        } else {
+          input.attr('type', 'password');
+        }
+      });
+
+      // Check password strength
+      $('#register-password').keyup(function() {
+        var password = $(this).val();
+        var meter = $('.password-strength-meter');
+        var strength = 0;
+
+        if (password.length >= 8) {
+          strength += 1;
+        }
+        if (/[A-Z]/.test(password)) {
+          strength += 1;
+        }
+        if (/[a-z]/.test(password)) {
+          strength += 1;
+        }
+        if (/[0-9]/.test(password)) {
+          strength += 1;
+        }
+        if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+          strength += 1;
+        }
+
+        meter.removeClass('weak medium strong');
+        if (strength < 3) {
+          meter.addClass('weak');
+        } else if (strength === 3) {
+          meter.addClass('medium');
+        } else if (strength === 4) {
+          meter.addClass('strong');
+        }
+
+        checkPasswordMatch();
+      });
+
+      // Check password match
+      $('#confirm-password').keyup(function() {
+        checkPasswordMatch();
+      });
+
+      function checkPasswordMatch() {
+        var password = $('#register-password').val();
+        var confirmPassword = $('#confirm-password').val();
+        var indicator = $('.password-match-indicator');
+
+        if (confirmPassword && password === confirmPassword) {
+          indicator.text('Passwords match').css('color', 'green');
+        } else {
+          indicator.text('Passwords do not match').css('color', 'red');
+        }
+      }
+    });
+  </script>
+</body>
+</html>

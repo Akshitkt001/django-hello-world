@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    {% include 'links.html' %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="{% static 'js/script.js' %}"></script>
+    <style>
+        /* Add the CSS here for fixed footer */
+        .fixed-footer {
+            position: fixed; /* Fixes the footer to the bottom of the screen */
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #f8f9fa; /* Background color for the footer */
+            border-top: 1px solid #ddd; /* Border for visual separation */
+            box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+            padding: 10px 0;
+            display: flex; /* Enables flexbox layout */
+            justify-content: center; /* Centers the buttons horizontally */
+            align-items: center; /* Centers the buttons vertically */
+            gap: 10px; /* Space between buttons */
+            z-index: 1000; /* Keeps footer above other content */
+        }
+
+        .btn1 {
+            background-color: #fff; /* Background color of buttons */
+            color: black; /* Text color */
+            border: 1px solid #4285f4; /* Border color */
+            padding: 10px 20px; /* Padding inside buttons */
+            font-size: 16px; /* Font size for button text */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s ease; /* Smooth background color transition */
+            border-radius: 5px; /* Rounded corners */
+            text-align: center;
+            flex: 1; /* Ensures buttons take equal space */
+            max-width: 180px; /* Maximum width for buttons */
+        }
+
+        .btn1.active {
+            background-color: #4285f4; /* Background color for active button */
+            color: #fff; /* Text color for active button */
+        }
+
+        .btn1:hover {
+            background-color: #e0e0e0; /* Hover background color */
+        }
+
+        /* Ensure the main content has enough bottom padding */
+        .container-fluid {
+            padding-bottom: 60px; /* Adjust this value if necessary */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="topnav">
+        <h2>Hello {{ user.username }}</h2>
+    </div>
+    <div class="container-fluid p-4" style="padding-right:5% !important;">
+        <div class="row">
+            <div class="col-2 p-5" style="padding-top:0px !important;" id="myDIV">
+                <!-- Side menu content -->
+            </div>
+
+            <div class="col-10 p-5 bg-light">
+                <!------------------------------------------------------------------------------------------------->
+                <section style="padding:0% 10%;">
+                    <h1> Points {{ total_points }}</h1>  <!-- Ensure this line correctly displays the total points -->
+                    <table style="width: 100%;">
+                        <tr style="background-image: linear-gradient(to right top, #051937, #552b5d, #a73761, #e06146, #eba612); color: white;">
+                            <th>App Name</th>
+                            <th>App Link</th>
+                            <th>App Category</th>
+                            <th>Points</th>
+                        </tr>
+                        {% for app in app_details %}
+                        <tr>
+                            <td>{{ app.AppName }}</td>
+                            <td><a href="{{ app.AppLink }}">Link</a></td>
+                            <td>{{ app.AppCategory }}</td>
+                            <td>{{ app.points }} Credited</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer container -->
+    <div class="fixed-footer">
+        <a href="Home"><button class="btn1 col-12 active"><i class="bi bi-house-door-fill"></i> Home</button></a>
+        {% if user.is_superuser %}
+            <a href="Add_App"><button class="btn1 col-12"><i class="bi bi-plus-lg"></i> Add Apps</button></a>
+        {% endif %}
+        {% if not user.is_superuser %}
+            <a href="profile"><button class="btn1 col-12"><i class="bi bi-person-fill"></i> Profile</button></a>
+            <a href="points"><button class="btn1 col-12"><i class="bi bi-database-fill"></i> Points</button></a>
+            <a href="task"><button class="btn1 col-12"><i class="bi bi-calendar-check"></i> Task</button></a>
+        {% endif %}
+        <a href="logout"><button class="btn1 col-12"><i class="bi bi-power"></i> Logout</button></a>
+    </div>
+</body>
+
+</html>

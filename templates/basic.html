@@ -1,0 +1,10 @@
+<button class="btn1 col-12 active" ><i class="bi bi-house-door-fill"></i> Home</button><br><br>
+{% if user.is_superuser %}
+    <button class="btn1 col-12"><i class="bi bi-plus-lg"></i> Add Apps</button><br><br>
+{% endif %}
+{% if not user.is_superuser %}
+    <button class="btn1 col-12"><i class="bi bi-person-fill"></i> Profile</button><br><br>
+    <button class="btn1 col-12"><i class="bi bi-database-fill"></i> Points</button><br><br>
+    <button class="btn1 col-12"><i class="bi bi-calendar-check"></i> Task</button><br><br>
+{% endif %}
+<a href="logout"><button class="btn1 col-12" ><i class="bi bi-power"></i> Logout</button></a><br><br>

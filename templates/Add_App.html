@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    {% include 'links.html' %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="{% static 'js/script.js' %}"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content {
+            flex: 1;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #f8f9fa;
+            border-top: 1px solid #ddd;
+            box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+            padding: 10px 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .btn1 {
+            background-color: #fff;
+            color: black;
+            border: 1px solid #4285f4;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border-radius: 5px;
+            text-align: center;
+            flex: 1;
+            max-width: 180px;
+        }
+
+        .btn1.active {
+            background-color: #4285f4;
+            color: #fff;
+        }
+
+        .btn1:hover {
+            background-color: #e0e0e0;
+        }
+
+        .container-fluid {
+            padding-bottom: 60px; /* Space for the footer */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="topnav">
+        <h2>Hello Admin</h2>
+    </div>
+    <div class="content">
+        <div class="container-fluid p-4" style="padding-right:5% !important;">
+            <div class="row">
+                <div class="col-10 p-5 bg-light">
+                    <section>
+                        {% for message in messages %}
+                        <div class="container-fluid p-0" id="alert_message">
+                            <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true" id="hide_alert_message">×</span>
+                                </button>
+                                {{ message }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <form action="Add_App" method="post" enctype='multipart/form-data'>
+                            {% csrf_token %}
+                            <div>
+                                <br>
+                                <input type="file" id="image" name="AppIcon" accept="image/*" style="display: none;">
+                                <svg id="svg-placeholder" class="round-image" xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 24 24">
+                                    <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                                    <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z" />
+                                </svg>
+                                <img id="selected-image" class="round-image" src="" alt="Selected Image" style="display: none; width:150; height:150;">
+                            </div>
+                            <div class="d-flex justify-content-around">
+                                <div class="form-group">
+                                    <label for="name">Name:</label>
+                                    <input type="text" id="name" name="AppName" placeholder="Enter App Name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="link">Link:</label>
+                                    <input type="text" id="link" name="AppLink" placeholder="Enter App Link" required>
+                                </div>
+                            </div>
+                            <br><br>
+                            <div class="d-flex justify-content-around">
+                                <div class="form-group">
+                                    <label for="category">Category:</label>
+                                    <select id="category" name="AppCategory" required>
+                                        <option value="">Select a category</option>
+                                        <option value="social">Social Networking</option>
+                                        <option value="entertainment">Entertainment</option>
+                                        <option value="productivity">Productivity</option>
+                                        <option value="health">Health & Fitness</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <div id="subcategory-container" class="form-group">
+                                        <label for="subcategory">Subcategory:</label>
+                                        <select id="subcategory" name="AppSubCategory" required>
+                                            <option value="">Select a subcategory</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <h1></h1>
+                            <div class="d-flex justify-content-center text-light">
+                                <input class="btn btn-primary col-2" id="add_points" type="number" name="points" placeholder="App Points" required>
+                            </div><br>
+                            <div class="d-flex justify-content-center">
+                                <button class="btn btn-success col-2">SUBMIT</button>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer section with buttons -->
+    <div class="footer">
+        <a href="Home"><button class="btn1"><i class="bi bi-house-door-fill"></i> Home</button></a>
+        {% if user.is_superuser %}
+            <a href="Add_App"><button class="btn1 active"><i class="bi bi-plus-lg"></i> Add Apps</button></a>
+        {% endif %}
+        {% if not user.is_superuser %}
+            <a href="profile"><button class="btn1"><i class="bi bi-person-fill"></i> Profile</button></a>
+            <a href="points"><button class="btn1"><i class="bi bi-database-fill"></i> Points</button></a>
+            <a href="task"><button class="btn1"><i class="bi bi-calendar-check"></i> Task</button></a>
+        {% endif %}
+        <a href="logout"><button class="btn1"><i class="bi bi-power"></i> Logout</button></a>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#hide_alert_message').click(function () {
+                $('#alert_message').hide();
+            });
+
+            $('#svg-placeholder').click(function () {
+                $('#image').click();
+            });
+
+            $('#image').change(function (e) {
+                var file = e.target.files[0];
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#svg-placeholder').hide();
+                    $('#selected-image').attr('src', e.target.result).show();
+                };
+
+                reader.readAsDataURL(file);
+            });
+
+            var subcategories = {
+                social: ["Chat & Messaging", "Social Media", "Dating"],
+                entertainment: ["Music & Audio", "Video Streaming", "Gaming"],
+                productivity: ["Task Management", "Note-taking", "Document Editing"],
+                health: ["Exercise & Workout", "Nutrition & Diet", "Meditation & Mindfulness"]
+            };
+
+            function populateSubcategories(category) {
+                var subcategoryOptions = subcategories[category];
+                var subcategorySelect = $('#subcategory');
+
+                subcategorySelect.empty();
+
+                if (subcategoryOptions && subcategoryOptions.length > 0) {
+                    subcategoryOptions.forEach(function (subcategory) {
+                        subcategorySelect.append($('<option>', {
+                            value: subcategory.toLowerCase().replace(/\s+/g, '-'),
+                            text: subcategory
+                        }));
+                    });
+
+                    $('#subcategory-container').show(); 
+                } else {
+                    $('#subcategory-container').hide();
+                }
+            }
+
+            $('#category').change(function () {
+                var selectedCategory = $(this).val();
+                populateSubcategories(selectedCategory);
+            });
+        });
+
+        var header = document.getElementById("myDIV");
+        var btns = header.getElementsByClassName("btn1");
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].addEventListener("click", function () {
+                var current = document.getElementsByClassName("active");
+                current[0].className = current[0].className.replace(" active", "");
+                this.className += " active";
+            });
+        }
+    </script>
+</body>
+
+</html>

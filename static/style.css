@@ -1,0 +1,241 @@
+          body {
+      font-family: Arial, sans-serif;
+      background-color: #e4e5e5;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+
+
+    .form-group {
+      margin-bottom: 20px;
+      width: 30vw;
+      line-height: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    input[type="text"],
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .round-image {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      margin: 0 auto 10px;
+      display: block;
+      cursor: pointer;
+    }
+    input[id="add_points"]::placeholder {
+        color:white;
+    }
+    .topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav h2 {
+  float: center;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+
+}
+
+.btn1 {
+  border:1px solid #4285f4;
+   color: black;
+   
+   
+
+}
+.active,  .btn1:hover {
+  background-image: linear-gradient(to right top, #051937, #552b5d, #a73761, #e06146, #eba612);
+  color: black;
+}
+.bi{
+   color: black;
+}
+.bip{
+   color:  #4285f4;
+}
+    .profile-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .profile-image {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #ffffff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-name {
+      font-size: 32px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .profile-bio {
+      font-size: 18px;
+      margin-top: 5px;
+      color: #888888;
+    }
+
+    .profile-details {
+      margin-top: 40px;
+    }
+
+
+
+    .profile-details label {
+      font-weight: bold;
+      color: #333333;
+    }
+
+    .profile-details a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+
+      #dropZone {
+
+            height: 300px;
+            border: 2px dashed #aaa;
+            border-radius: 5px;
+            text-align: center;
+            padding-top: 80px;
+            font-size: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #dropZone img {
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        #dropZone p {
+            display: none;
+        }
+
+        #selectedImages {
+            margin-top: 20px;
+        }
+        #fileInput{
+            text-align-last: center;
+        }
+        .bi-drag{
+            width: 100px;
+            height: 100px;
+        }
+ ::-webkit-scrollbar {
+        width: 0px;
+        height: 0px;
+        background: transparent;
+
+            .password-icon {
+      position: relative;
+    }
+
+    .password-icon i {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+
+    .password-strength-meter {
+      height: 10px;
+      border-radius: 5px;
+    }
+
+    .weak {
+      background-color: #ff4d4d;
+    }
+
+    .medium {
+      background-color: #ffd633;
+    }
+
+    .strong {
+      background-color: #b3ff66;
+    }
+
+    .container {
+    height:100vh;
+      background-color: #ffffff;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-tabs {
+      background-color: #f8f9fa;
+      border-bottom: none;
+    }
+
+    .nav-tabs .nav-link {
+      background-color: #f8f9fa;
+      color: #495057;
+      border: none;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
+    .nav-tabs .nav-link.active {
+      background-color: #2E8B57;
+      color: white;
+      border-color: #dee2e6 #dee2e6 #ffffff;
+
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+      background-color: #0069d9;
+      border-color: #0069d9;
+    }
+    }
+  
+
+  table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(odd) {
+  background-color: #dddddd;
+}

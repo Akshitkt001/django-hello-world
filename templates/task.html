@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include 'links.html' %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="{% static 'js/script.js' %}"></script>
+    <style>
+        /* Add CSS for the fixed footer */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #f8f9fa;
+            border-top: 1px solid #ddd;
+            box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+            padding: 10px 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .btn1 {
+            background-color: #fff;
+            color: black;
+            border: 1px solid #4285f4;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border-radius: 5px;
+            text-align: center;
+            flex: 1;
+            max-width: 180px;
+        }
+
+        .btn1.active {
+            background-color: #4285f4;
+            color: #fff;
+        }
+
+        .btn1:hover {
+            background-color: #e0e0e0;
+        }
+
+        .container-fluid {
+            padding-bottom: 60px; /* Adjust if needed to fit footer */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="topnav">
+        <h2>Hello {{ user.username }}</h2>
+    </div>
+    <div class="container-fluid p-4" style="padding-right:5% !important;">
+        <div class="row">
+            <div class="col-10 p-5 bg-light">
+                <section style="padding:0% 10%; ">
+                    {% for app in app_details %}
+                    <div class="row border rounded border-secondary p-2 container-fluid">
+                        <div class="col-2">
+                            <img class="flex-shrink-0 img-fluid border rounded" src="/media/{{app.AppIcon}}" alt=""
+                                style="width: 100px; height: 100px;">
+                        </div>
+                        <div class="col-4 p-2">
+                            <h3 class="mb-3">{{app.AppName}}</h3>
+                            <span>{{app.AppCategory}}</span>
+                            <span>( {{app.AppSubCategory}} )</span>
+                        </div>
+                        <div class="col-4 p-2">
+                            <button type="button" class="btn col-12">{{app.points}} Points Credited</button>
+                        </div>
+                        <div class="col-2 p-3">
+                            <button type="button" class="btn btn-success col-12">Completed</button>
+                        </div>
+                    </div><br>
+                     {% endfor %}
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer section with buttons -->
+    <div class="footer">
+        <a href="Home"><button class="btn1"><i class="bi bi-house-door-fill"></i> Home</button></a>
+        {% if user.is_superuser %}
+            <a href="Add_App"><button class="btn1"><i class="bi bi-plus-lg"></i> Add Apps</button></a>
+        {% endif %}
+        {% if not user.is_superuser %}
+            <a href="profile"><button class="btn1"><i class="bi bi-person-fill"></i> Profile</button></a>
+            <a href="points"><button class="btn1"><i class="bi bi-database-fill"></i> Points</button></a>
+            <a href="task"><button class="btn1"><i class="bi bi-calendar-check"></i> Task</button></a>
+        {% endif %}
+        <a href="logout"><button class="btn1"><i class="bi bi-power"></i> Logout</button></a>
+    </div>
+</body>
+
+</html>
