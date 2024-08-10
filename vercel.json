@@ -10,6 +10,15 @@
       }
     }
   ],
+  "builds": [
+    {
+      "src": "build_files.sh",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "staticfiles"
+      }
+    }
+  ],
   "routes": [
     {
       "src": "/static/(.*)",
@@ -22,6 +31,15 @@
     {
       "src": "/(.*)",
       "dest": "TDS/wsgi.py"
+    }
+  ],
+  "builds": [
+    {
+      "src": "build_files.sh",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "staticfiles"
+      }
     }
   ]
 }
