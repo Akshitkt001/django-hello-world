@@ -1,4 +1,6 @@
-Django==3.2
-djangorestframework==3.12.4
-django-allauth==0.44.0
+Django
+djangorestframework
+django-allauth
 psycopg2-binary
+python manage.py collectstatic --noinput
+python manage.py migrate
