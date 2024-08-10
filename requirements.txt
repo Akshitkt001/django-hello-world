@@ -1,5 +1,6 @@
 Django
 gunicorn
 djangorestframework
+pillow
 django-allauth
 psycopg2-binary
