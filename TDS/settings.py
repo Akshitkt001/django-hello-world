@@ -45,7 +45,7 @@ ROOT_URLCONF = 'TDS.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [BASE_DIR / "templates"],  # Adjust this to your template directory
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
